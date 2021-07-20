@@ -8,13 +8,15 @@ namespace ProjectMahasiswa
     class Program
     {
         // deklarasi objek collection untuk menampung objek mahasiswa
-        static List<string> daftarMahasiswa = new List<string>();
+        static List<Mahasiswa> daftarMahasiswa = new List<Mahasiswa>();
 
         static void Main(string[] args)
         {
             Console.Title = "Responsi UAS Matakuliah Pemrograman";
+            bool statusMenu = true;
 
-            while (true)
+
+            while (statusMenu)
             {
                 TampilMenu();
 
@@ -23,19 +25,17 @@ namespace ProjectMahasiswa
 
                 switch (nomorMenu)
                 {
-                    case 1:
+                 case 1:
                         TambahMahasiswa();
                         break;
-
                     case 2:
                         HapusMahasiswa();
                         break;
-
                     case 3:
                         TampilMahasiswa();
                         break;
-
-                    case 4: // keluar dari program
+                    case 4:  // keluar dari program
+                        statusMenu = false;
                         return;
 
                     default:
@@ -47,14 +47,12 @@ namespace ProjectMahasiswa
         static void TampilMenu()
         {
             Console.Clear();
-            Console.Title = "Pilih Menu Aplikasi ";
-            Console.WriteLine = "1. Tambah Mahasiswa";
+            Console.WriteLine("Pilih Menu Aplikasi");
             Console.WriteLine();
-            Console.WriteLine = "2. Hapus Mahasiswa";
-            Console.WriteLine();
-            Console.WriteLine = "3. Tampilkan Mahasiswa";
-            Console.WriteLine();
-            Console.WriteLine = "4. Keluar";
+            Console.WriteLine("1. Tambah Mahasiswa");
+            Console.WriteLine("2. Hapus Mahasiswa");
+            Console.WriteLine("3. Tampilkan Mahasiswa");
+            Console.WriteLine("4. Keluar");
             Console.WriteLine();
             // PERINTAH: lengkapi kode untuk menampilkan menu
         }
@@ -65,23 +63,29 @@ namespace ProjectMahasiswa
 
             Console.WriteLine("Tambah Data Mahasiswa");
             Console.Write("NIM : ");
-            float nim = Console.ReadLine();
-            Console.Write("Nama : ");
+            string nim = Console.ReadLine();
+            Console.Write("NAMA :");
             string nama = Console.ReadLine();
-            Console.Write("Jenis Kelamin [L/P] ");
-            string jenis = Console.ReadLine();
-            Console.Write("IPK : ");
-            float ipk = Console.ReadLine();
-            if (jenis == "L")
+            Console.Write("Jenis Kelamin [L/P] :");
+            char kelamin = Convert.ToChar(Console.ReadLine());
+            string jenisKelamin;
+            if (kelamin == 'L')
             {
-                jenis = "Laki-Laki";
+                jenisKelamin = "Laki-Laki";
             }
             else
             {
-                jenis = "Perempuan";
+                jenisKelamin = "Perempuan";
             }
-            Console.Write("IPK : ");
-            double total = Convert.ToDouble(Console.ReadLine());
+
+            Console.Write("IPK :");
+            string ipk = Console.ReadLine();
+            Mahasiswa mahasiswa = new Mahasiswa();
+            mahasiswa.nim = nim;
+            mahasiswa.mhs = nama;
+            mahasiswa.kel = jenisKelamin;
+            mahasiswa.ipk = ipk;
+            daftarMahasiswa.Add(mahasiswa);
 
             // PERINTAH: lengkapi kode untuk menambahkan objek mahasiswa ke dalam collection
 
@@ -92,23 +96,30 @@ namespace ProjectMahasiswa
         static void HapusMahasiswa()
         {
             Console.Clear();
+
             Console.WriteLine("Hapus Data Mahasiswa");
-            string hapus;
-            Console.WriteLine("NIM : ");
-            hapus = Console.ReadLine();
-            int x = 0;
-            foreach (Mahasiswa mahasiswa in daftarMahasiswa)
+            Console.WriteLine();
+            Console.Write("NIM : ");
+            string nim = Console.ReadLine();
+            bool status = false;
+
+            foreach (Mahasiswa mhs in daftarMahasiswa)
             {
-                if (hapus == Mahasiswa.Nim)
+                if (mhs.nim == nim)
                 {
-                    daftarMahasiswa.RemoveAt(x);
-                    Console.WriteLine("Data mahasiswa berhasil di hapus");
+                    daftarMahasiswa.Remove(mhs);
+                    Console.WriteLine();
+                    Console.WriteLine("Data Mahasiswa berhasil di hapus");
+                    status = true;
                     break;
                 }
-                x++;
-                Console.WriteLine("NIM tidak ditemukan");
             }
+            if (!status)
+            {
+                Console.WriteLine();
+                Console.WriteLine("NIM tidak ditemukan");
 
+            }
             // PERINTAH: lengkapi kode untuk menghapus objek mahasiswa dari dalam collection
 
             Console.WriteLine("\nTekan ENTER untuk kembali ke menu");
@@ -118,15 +129,13 @@ namespace ProjectMahasiswa
         static void TampilMahasiswa()
         {
             Console.Clear();
-            Console.WriteLine("Data Mahasiswa");
-            int no = 1;
-            foreach (Mahasiswa mahasiswa in daftarMahasiswa)
+            Console.WriteLine("Data Mahasiswa\n");
+            int i = 1;
+            foreach (Mahasiswa mhs in daftarMahasiswa)
             {
-                Console.WriteLine("{0}, {1}, {2}, {3}, {4}, {5}", no, mahasiswa.NIM, mahasiswa.Nama, mahasiswa.Jenis,
-                mahasiswa.IPK);
-                no++;
+                Console.WriteLine("{0}, {1}, {2}, {3}, {4}", i, mhs.nim, mhs.mhs, mhs.kel, mhs.ipk);
+                i++;
             }
-
             // PERINTAH: lengkapi kode untuk menampilkan daftar mahasiswa yang ada di dalam collection
 
             Console.WriteLine("\nTekan enter untuk kembali ke menu");

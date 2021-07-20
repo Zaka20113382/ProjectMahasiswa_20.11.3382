@@ -7,10 +7,9 @@ namespace ProjectMahasiswa
 {
     public class Mahasiswa
     {
-       // PERINTAH: lengkapi property class mahasiswa, sesuai petunjuk soal
-            public string nama { get; set; }
-            public float nim { get; set; }
-            public string jenis { get; set; }
-            public float ipk { get; set; }
-        }
+        public string nim { set; get; }
+        public string mhs { set; get; }
+        public string kel { set; get; }
+        public string ipk { set; get; }
+    }
 }
